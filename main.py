@@ -28,19 +28,27 @@ print "Password for",user,"?"
 passwd=getpass.getpass()
 reddit.login(user, passwd)
 
-sr = reddit.get_subreddit("petitescalier").get_hot(limit=20)
+while True:
+    try:
+        sr = reddit.get_subreddit("petitescalier").get_hot(limit=20)
 
-s=""
-s+='<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
-for post in sr:
-    s += '<div class="post">'
-    s += '<span class="score">' + str(post.score) + '</span>'
-    s += '<span class="post_title">' + post.title.encode('utf8') + '</span>'
-    s += ' par '
-    s += '<span class="author">' + post.author.name.encode('utf8') + '</span>'
-    s += '</div>' # /post
-    s += '\n'
+        s=""
+        s+='<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
+        for post in sr:
+            s += '<div class="post">'
+            s += '<span class="score">' + str(post.score) + '</span>'
+            s += '<span class="post_title">' + post.title.encode('utf8') + '</span>'
+            s += ' par '
+            s += '<span class="author">' + post.author.name.encode('utf8') + '</span>'
+            s += '</div>' # /post
+            s += '\n'
 
-fi = open("out.html", "w")
-fi.write(s)
-fi.close()
+        fi = open("/var/www/Projects/PetitEscalierReadOnly/index.html", "w")
+        fi.write(s)
+        fi.close()
+        sleep(3600) # One update every hour is quite enough for now
+    except:
+        print asctime(),"Exception in main program : "
+        traceback.print_exc()
+        sleep(300) # retry in 5 minutes
+
