@@ -45,8 +45,8 @@ def add_replies(replies):
             s+='   <span class="author">' + rep.author.name.encode('utf8') + '</span>'
             s+='  </div>' # /reply_header
             s+='  <div class="reply_body">' 
-            s+='<code>' # En attendant un renderer a la reddit
-            s+= rep.body.encode('utf8') + '</code></div>'
+            s+='<pre>' # En attendant un renderer a la reddit
+            s+= rep.body.encode('utf8') + '</pre></div>'
             s+= add_replies(rep.replies)
             s+=' </div>' # /reply
     return s
