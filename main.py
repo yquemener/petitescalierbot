@@ -73,7 +73,7 @@ if __name__ == "__main__":
                 s += ' par '
                 s += '  <span class="author">' + post.author.name.encode('utf8') + '</span>'
                 s += ' </div>' # /post_header
-                s += ' <div class="post_body">' + post.selftext.encode('utf8') + '</div>'
+                s += ' <div class="post_body"><pre>' + post.selftext.encode('utf8') + '</pre></div>'
                 s += add_replies(post.comments)
                 s += '</div>' # /post
                 s += '\n'
