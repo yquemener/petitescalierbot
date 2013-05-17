@@ -1,0 +1,25 @@
+div.post {
+    margin-bottom:15px;
+    border-style:solid;
+}
+
+div.post_body {
+    margin-bottom:5px;
+    background-color:rgb(235,235,255);
+}
+
+span.post_title {
+    font-size:x-large;
+}
+
+div.reply {
+    margin-left:15px;
+}
+
+div.reply_body {
+    background-color:rgb(225,225,255);
+}
+
+span.author {
+    font-weight: bold;
+}
