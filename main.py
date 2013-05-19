@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            sr = reddit.get_subreddit("petitescalier").get_hot(limit=2)
+            sr = reddit.get_subreddit("petitescalier").get_hot(limit=20)
 
             s=""
             s+='<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
