@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8
+
 # This file is part of PetitEscalier Bot.
 # 
 # PetitEscalier Bot is free software: you can redistribute it and/or modify
@@ -39,16 +42,16 @@ def add_replies(replies):
     else:
         s=""
         for rep in replies:
-            s+=' <div class="reply">'
-            s+='  <div class="reply_header">'
-            s+='   <span class="score">' + str(rep.score) + '</span>'
-            s+='   <span class="author">' + rep.author.name.encode('utf8') + '</span>'
-            s+='  </div>' # /reply_header
-            s+='  <div class="reply_body">' 
+            s+=' <div class="reply">\n'
+            s+='  <div class="reply_header">\n'
+            s+='   <span class="score">' + str(rep.score) + '</span>\n'
+            s+='   <span class="author">' + rep.author.name.encode('utf8') + '</span>\n'
+            s+='  </div>\n' # /reply_header
+            s+='  <div class="reply_body">\n' 
             s+='<pre>' # En attendant un renderer a la reddit
-            s+= rep.body.encode('utf8') + '</pre></div>'
+            s+= rep.body.encode('utf8') + '</pre></div>\n'
             s+= add_replies(rep.replies)
-            s+=' </div>' # /reply
+            s+=' </div>\n' # /reply
     return s
 
 if __name__ == "__main__":
@@ -65,18 +68,37 @@ if __name__ == "__main__":
             s=""
             s+='<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
             s+= '<link href="css.css" type="text/css" rel="stylesheet"></link>'
+            s+="""<script>
+    function toggleVisible(elem)
+    {
+        e=document.getElementById(elem);
+        if((e.style.display=="none")||(e.style.display==""))
+        {
+            e.style.display="block";
+        }
+        else
+        {
+            e.style.display="none";
+        }
+    }
+</script>\n"""
+            num_rep=0;
             for post in sr:
-                s += '<div class="post">'
-                s += ' <div class="post_header">'
-                s += '  <span class="score">' + str(post.score) + '</span>'
-                s += '  <span class="post_title">' + post.title.encode('utf8') + '</span>'
+                s += '<div class="post">\n'
+                s += ' <div class="post_header">\n'
+                s += '  <span class="score">' + str(post.score) + '</span>\n'
+                s += '  <span class="post_title">' + post.title.encode('utf8') + '</span>\n'
                 s += ' par '
-                s += '  <span class="author">' + post.author.name.encode('utf8') + '</span>'
-                s += ' </div>' # /post_header
-                s += ' <div class="post_body"><pre>' + post.selftext.encode('utf8') + '</pre></div>'
+                s += '  <span class="author">' + post.author.name.encode('utf8') + '</span>\n'
+                s += ' </div>\n' # /post_header
+                s += ' <div class="post_body"><pre>' + post.selftext.encode('utf8') + '</pre></div>\n'
+                s += ' <a href="#" OnClick=\'toggleVisible("replies_'+str(num_rep)+'");return false;\'>Afficher les commentaires</a>'
+                s += ' <div class="replies" id="replies_'+str(num_rep)+'\">\n'
                 s += add_replies(post.comments)
-                s += '</div>' # /post
+                s += ' </div>' # /replies
+                s += '</div>\n' # /post
                 s += '\n'
+                num_rep+=1
 
             fi = open("/var/www/Projects/PetitEscalierReadOnly/index.html", "w")
             fi.write(s)

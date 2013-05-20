@@ -30,6 +30,10 @@ div.reply {
     margin-left:15px;
 }
 
+div.replies {
+    display:none;
+}
+
 div.reply_body {
     background-color:rgb(225,225,255);
 }
